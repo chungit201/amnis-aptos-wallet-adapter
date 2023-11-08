@@ -24,13 +24,13 @@ Supports:
 with `yarn`
 
 ```
-yarn add @manahippo/aptos-wallet-adapter
+yarn add @amnis/aptos-wallet-adapter
 ```
 
 with `npm`
 
 ```
-npm install @manahippo/aptos-wallet-adapter
+npm install @amnis/aptos-wallet-adapter
 ```
 
 # Examples
@@ -65,7 +65,7 @@ import {
   FoxWalletAdapter,
   CloverWalletAdapter,
   SpacecyWalletAdapter
-} from '@manahippo/aptos-wallet-adapter';
+} from '@amnis/aptos-wallet-adapter';
 
 const wallets = [
   new HippoWalletAdapter(),

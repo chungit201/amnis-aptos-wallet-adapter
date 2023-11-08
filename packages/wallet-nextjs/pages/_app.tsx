@@ -12,6 +12,7 @@ import {
   FletchWalletAdapter,
   AptosSnapAdapter,
   NightlyWalletAdapter,
+  MSafeWalletAdapter,
   BitkeepWalletAdapter,
   TokenPocketWalletAdapter,
   BloctoWalletAdapter,
@@ -19,7 +20,7 @@ import {
   Coin98WalletAdapter,
   FoxWalletAdapter,
   OpenBlockWalletAdapter
-} from '@manahippo/aptos-wallet-adapter';
+} from '@chung2001/aptos-wallet-adapter';
 import { useMemo } from 'react';
 import { message } from 'antd';
 
@@ -28,6 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     () => [
       // new HippoWalletAdapter(),
       new HippoExtensionWalletAdapter(),
+      new MSafeWalletAdapter(),
       new MartianWalletAdapter(),
       new AptosWalletAdapter(),
       new FewchaWalletAdapter(),

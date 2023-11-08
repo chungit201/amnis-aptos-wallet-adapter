@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@chung2001/aptos-wallet-adapter": "^1.0.12",
     "@manahippo/aptos-wallet-adapter": "file:../aptos-wallet-adapter",
     "@openblockhq/dappsdk": "^5.0.0",
     "antd": "^4.21.7",
