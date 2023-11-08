@@ -1,0 +1,13 @@
+{
+  "name": "@amnis/web-root",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^5.2.0"
+  },
+  "version": "0.0.0",
+  "dependencies": {
+    "@solana/web3.js": "^1.87.4"
+  }
+}
