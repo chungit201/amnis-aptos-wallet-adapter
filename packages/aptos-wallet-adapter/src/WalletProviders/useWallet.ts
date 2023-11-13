@@ -15,6 +15,8 @@ export interface Wallet {
   readyState: WalletReadyState;
 }
 
+type AddressInfo = { address: string; publicKey: string; authKey?: string };
+
 export interface WalletContextState {
   autoConnect: boolean;
   wallets: Wallet[];
@@ -35,6 +37,8 @@ export interface WalletContextState {
   signMessage(
     message: string | SignMessagePayload | Uint8Array
   ): Promise<SignMessageResponse | string>;
+  onAccountChange?: (listener: (newAddress: AddressInfo) => void) => void;
+  onNetworkChange?: (listener: (network: { networkName: string }) => void) => void;
 }
 
 const DEFAULT_CONTEXT = {

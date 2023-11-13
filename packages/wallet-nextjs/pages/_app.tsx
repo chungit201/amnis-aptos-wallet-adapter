@@ -20,7 +20,7 @@ import {
   Coin98WalletAdapter,
   FoxWalletAdapter,
   OpenBlockWalletAdapter
-} from '@chung2001/aptos-wallet-adapter';
+} from '@amnis_finance/aptos-wallet-adapter';
 import { useMemo } from 'react';
 import { message } from 'antd';
 

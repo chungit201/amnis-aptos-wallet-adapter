@@ -8,7 +8,6 @@ Supports:
 - [Martian wallet](https://martianwallet.xyz/)
 - [Fewcha wallet](https://fewcha.app/)
 - [Hippo wallet](https://github.com/hippospace/hippo-wallet)
-- [Hippo web wallet](https://hippo-wallet-test.web.app/)
 - [Pontem Wallet](https://pontem.network/pontem-wallet)
 - [Spika wallet](https://spika.app)
 - [Rise Wallet](https://risewallet.io/)
@@ -24,24 +23,24 @@ Supports:
 with `yarn`
 
 ```
-yarn add @amnis/aptos-wallet-adapter
+yarn add @amnis_finance/aptos-wallet-adapter
 ```
 
 with `npm`
 
 ```
-npm install @amnis/aptos-wallet-adapter
+npm install @amnis_finance/aptos-wallet-adapter
 ```
 
 # Examples
 
 ## **Frontend Integration**
 
-Here's an example of how we integrate the adapter into [hippo's frontend](https://github.com/hippospace/hippo-frontend/blob/main/src/Providers.tsx):
+Here's an example of how we integrate the adapter into [amnis frontend](https://github.com/hippospace/hippo-frontend/blob/main/src/Providers.tsx):
 
 ### **Wallet integration**
 
-Wallets source code [here](https://github.com/hippospace/aptos-wallet-adapter/tree/main/src/WalletAdatpers).
+Wallets source code [here](https://stake.amnis.finance).
 
 # Use React Provider
 
@@ -65,10 +64,9 @@ import {
   FoxWalletAdapter,
   CloverWalletAdapter,
   SpacecyWalletAdapter
-} from '@amnis/aptos-wallet-adapter';
+} from '@amnis_finance/aptos-wallet-adapter';
 
 const wallets = [
-  new HippoWalletAdapter(),
   new MartianWalletAdapter(),
   new AptosWalletAdapter(),
   new FewchaWalletAdapter(),
@@ -105,7 +103,7 @@ export default App;
 # Web3 Hook
 
 ```typescript
-import { useWallet } from '@manahippo/aptos-wallet-adapter';
+import { useWallet } from '@amnis_finance/aptos-wallet-adapter';
 
 const { connected, account, network, ...rest } = useWallet();
 
@@ -129,7 +127,7 @@ const { connected, account, network, ...rest } = useWallet();
 # Connect & Disconnect (updated @ 18/10/2022)
 
 ```typescript
-import { AptosWalletName, useWallet } from "@manahippo/aptos-wallet-adapter"
+import { AptosWalletName, useWallet } from "@amnis_finance/aptos-wallet-adapter"
 
 ...
 
@@ -160,42 +158,6 @@ if (!connected) {
 }
 ```
 
-# Hippo Wallet Client
-
-```typescript
-import { HippoSwapClient, HippoWalletClient } from '@manahippo/hippo-sdk';
-import { getParserRepo } from '@manahippo/hippo-sdk';
-
-export const hippoWalletClient = async (account: ActiveAptosWallet) => {
-  if (!account) return undefined;
-  const { netConf } = readConfig();
-  const repo = getParserRepo();
-  const walletClient = await HippoWalletClient.createInTwoCalls(
-    netConf,
-    aptosClient,
-    repo,
-    account
-  );
-
-  return walletClient;
-};
-```
-
-# Hippo Swap Client
-
-```typescript
-import { HippoSwapClient, HippoWalletClient } from '@manahippo/hippo-sdk';
-import { getParserRepo } from '@manahippo/hippo-sdk/';
-
-export const hippoSwapClient = async () => {
-  const { netConf } = readConfig();
-  const repo = getParserRepo();
-  const swapClient = await HippoSwapClient.createInOneCall(netConf, aptosClient, repo);
-
-  return swapClient;
-};
-```
-
 # Submit and sign transaction
 
 **Request faucet**
@@ -203,42 +165,17 @@ export const hippoSwapClient = async () => {
 ```typescript
 const { signAndSubmitTransaction } = useWallet();
 
-const payload = await hippoWallet?.makeFaucetMintToPayload(uiAmtUsed, symbol);
-if (payload) {
-  const result = await signAndSubmitTransaction(payload);
+const payload: Types.TransactionPayload = {
+  type: 'entry_function_payload',
+  function: `0x1::module_name::function_name`,
+  type_arguments: [],
+  arguments: [],
+};
+const result = await signAndSubmitTransaction(payload);
   if (result) {
-    message.success('Transaction Success');
-    await hippoWallet?.refreshStores();
+    console.log('Transaction hash', result.hash)
+    console.log('Transaction Success');
   }
-}
 ```
 
-**Swap Token**
 
-```typescript
-const bestQuote = await hippoSwap.getBestQuoteBySymbols(fromSymbol, toSymbol, uiAmtIn, 3);
-if (!bestQuote) {
-  throw new Error(`No route exists from ${fromSymbol} to ${toSymbol}`);
-}
-const payload = await bestQuote.bestRoute.makeSwapPayload(uiAmtIn, uiAmtOutMin);
-const result = await signAndSubmitTransaction(payload);
-if (result) {
-  message.success('Transaction Success');
-  setRefresh(true);
-}
-```
-
-**Deposit Transaction**
-
-```typescript
-const pool = hippoSwap.getDirectPoolsBySymbolsAndPoolType(lhsSymbol, rhsSymbol, poolType);
-if (pool.length === 0) {
-  throw new Error('Desired pool does not exist');
-}
-const payload = await pool[0].makeAddLiquidityPayload(lhsUiAmt, rhsUiAmt);
-const result = await signAndSubmitTransaction(payload);
-if (result) {
-  message.success('Transaction Success');
-  setRefresh(true);
-}
-```

@@ -1,6 +1,6 @@
 {
   "name": "@chung2001/aptos-wallet-adapter",
-  "version": "1.0.13",
+  "version": "1.0.12",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [

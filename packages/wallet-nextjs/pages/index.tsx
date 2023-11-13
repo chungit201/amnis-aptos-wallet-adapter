@@ -7,7 +7,7 @@ import {
   useWallet,
   SignMessageResponse,
   WalletAdapterNetwork
-} from '@manahippo/aptos-wallet-adapter';
+} from '@amnis_finance/aptos-wallet-adapter';
 import {DEVNET_NODE_URL, MAINNET_NODE_URL} from '../config/aptosConstants';
 import {faucetClient} from '../config/aptosClient';
 import {AptosAccount} from 'aptos';
