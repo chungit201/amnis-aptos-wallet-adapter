@@ -124,7 +124,7 @@ const { connected, account, network, ...rest } = useWallet();
 */
 ```
 
-# Connect & Disconnect (updated @ 18/10/2022)
+# Connect & Disconnect 
 
 ```typescript
 import { AptosWalletName, useWallet } from "@amnis_finance/aptos-wallet-adapter"

@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-vars */
-import {Button, Spin} from 'antd';
-import {useMemo, useState} from 'react';
-import {LoadingOutlined} from '@ant-design/icons';
-import {AptosClient, Types} from 'aptos';
+import { Button, Spin } from 'antd';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { LoadingOutlined } from '@ant-design/icons';
+import { AptosClient, Types } from 'aptos';
 import {
   useWallet,
   SignMessageResponse,
   WalletAdapterNetwork
 } from '@amnis_finance/aptos-wallet-adapter';
-import {DEVNET_NODE_URL, MAINNET_NODE_URL} from '../config/aptosConstants';
-import {faucetClient} from '../config/aptosClient';
-import {AptosAccount} from 'aptos';
+import { DEVNET_NODE_URL, MAINNET_NODE_URL } from '../config/aptosConstants';
+import { faucetClient } from '../config/aptosClient';
+import { AptosAccount } from 'aptos';
 
 const MainPage = () => {
   const [txLoading, setTxLoading] = useState({
@@ -37,7 +37,22 @@ const MainPage = () => {
     network
   } = useWallet();
 
-  const {aptosClient} = useMemo(() => {
+  const handleNetworkChange = useCallback(async () => {
+    if (!currentWallet?.adapter) return;
+  }, [currentWallet?.adapter]);
+
+  useEffect(() => {
+    if (currentWallet?.adapter) {
+      currentWallet?.adapter.on('networkChange', handleNetworkChange);
+      return () => {
+        currentWallet?.adapter.off('networkChange', handleNetworkChange);
+      };
+    }
+  }, [currentWallet?.adapter]);
+
+  console.log('network', network);
+
+  const { aptosClient } = useMemo(() => {
     return {
       aptosClient:
         network?.name === WalletAdapterNetwork.Mainnet
@@ -56,17 +71,17 @@ const MainPage = () => {
               if (option.readyState === 'Installed') {
                 await connect(option.name);
               } else {
-                console.log('option.url',option.url)
+                console.log('option.url', option.url);
                 window.open(option.url, '_blank');
               }
             } catch (e) {
-              console.log(e)
+              console.log(e);
             }
           }}
           id={option.name.split(' ').join('_')}
           key={option.name}
           className="connect-btn">
-          <img className={'w-[15px] h-[15px]'} src={option.icon} alt=""/>
+          <img className={'w-[15px] h-[15px]'} src={option.icon} alt="" />
           {option.name}
         </Button>
       );
@@ -198,9 +213,9 @@ const MainPage = () => {
         'openblock'
       ].includes(currentWallet?.adapter?.name?.toLowerCase() || '')
         ? {
-          message: messageToSign,
-          nonce
-        }
+            message: messageToSign,
+            nonce
+          }
         : messageToSign;
       const signedMessage = await signMessage(msgPayload);
       const response = typeof signedMessage === 'string' ? signedMessage : signedMessage.signature;
@@ -242,7 +257,7 @@ const MainPage = () => {
 
   const renderContent = () => {
     if (connecting || disconnecting) {
-      return <Spin indicator={<LoadingOutlined style={{fontSize: 48}} spin/>}/>;
+      return <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} />;
     }
     if (connected && account) {
       return (
@@ -276,8 +291,8 @@ const MainPage = () => {
                   typeof signature !== 'string' && signature.address
                     ? signature.address
                     : Array.isArray(signature)
-                      ? JSON.stringify(signature)
-                      : (signature as string)
+                    ? JSON.stringify(signature)
+                    : (signature as string)
                 }
               />
             </div>

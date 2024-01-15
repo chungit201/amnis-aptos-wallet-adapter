@@ -40,16 +40,21 @@ function MyApp({ Component, pageProps }: AppProps) {
       new NightlyWalletAdapter(),
       new BitkeepWalletAdapter(),
       new TokenPocketWalletAdapter(),
-      new BloctoWalletAdapter({ network: WalletAdapterNetwork.Testnet, bloctoAppId:'6d85f56e-5f2e-46cd-b5f2-5cf9695b4d46' }),
+      new BloctoWalletAdapter({
+        network: WalletAdapterNetwork.Testnet,
+        bloctoAppId: '6d85f56e-5f2e-46cd-b5f2-5cf9695b4d46'
+      }),
       new Coin98WalletAdapter(),
       new FoxWalletAdapter(),
       new OpenBlockWalletAdapter()
     ],
     []
   );
+
   return (
     <WalletProvider
       wallets={wallets}
+      autoConnect={true}
       onError={(error: Error) => {
         console.log('wallet errors: ', error);
         message.error(error.message);

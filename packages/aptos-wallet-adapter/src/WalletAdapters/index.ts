@@ -22,3 +22,4 @@ export * from './MSafeWallet';
 export * from './OpenBlockWallet';
 export * from './CloverWallet';
 export * from './SpacecyWallet';
+export * from './OkxWallet';

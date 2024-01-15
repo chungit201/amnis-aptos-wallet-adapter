@@ -54,7 +54,7 @@ export type WalletName<T extends string = string> = T & { __brand__: 'WalletName
 
 export type NetworkInfo = {
   api?: string;
-  chainId?: string;
+  chainId?: any;
   name: WalletAdapterNetwork | undefined;
 };
 

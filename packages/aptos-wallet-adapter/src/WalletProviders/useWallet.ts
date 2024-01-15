@@ -21,6 +21,7 @@ export interface WalletContextState {
   autoConnect: boolean;
   wallets: Wallet[];
   wallet: Wallet | null;
+  adapter:WalletAdapter
   account: AccountKeys | null;
   connecting: boolean;
   connected: boolean;
@@ -37,8 +38,8 @@ export interface WalletContextState {
   signMessage(
     message: string | SignMessagePayload | Uint8Array
   ): Promise<SignMessageResponse | string>;
-  onAccountChange?: (listener: (newAddress: AddressInfo) => void) => void;
-  onNetworkChange?: (listener: (network: { networkName: string }) => void) => void;
+  onAccountChange: (listener: (newAddress: AddressInfo) => void) => void;
+  onNetworkChange: (listener: (network: { networkName: string }) => void) => void;
 }
 
 const DEFAULT_CONTEXT = {

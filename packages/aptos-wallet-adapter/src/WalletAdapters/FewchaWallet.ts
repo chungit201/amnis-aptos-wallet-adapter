@@ -43,7 +43,7 @@ export class FewchaWalletAdapter extends BaseWalletAdapter {
 
   url = 'https://fewcha.app/';
 
-  icon = 'https://miro.medium.com/fit/c/176/176/1*a0WaY-q7gjCRiuryRG6TkQ.png';
+  icon = 'https://cdn-images-1.medium.com/max/1200/1*y71_19v-kePwL_auEYKTcA.jpeg';
 
   protected _provider: Web3ProviderType | undefined;
 

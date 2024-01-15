@@ -143,7 +143,9 @@ export const WalletProvider: FC<WalletProviderProps> = ({
   // Handle the adapter's network event
   const handleNetworkChange = useCallback(() => {
     if (!adapter) return;
-    // console.log('adapter: handleNetworkChange', adapter.network);
+    const selectedWallet = wallets.find((wAdapter) => wAdapter.adapter.name === name);
+    console.log('adapter: handleNetworkChange', adapter);
+    console.log('selectedWallet',selectedWallet)
     setState((state) => {
       return {
         ...state,
@@ -367,12 +369,12 @@ export const WalletProvider: FC<WalletProviderProps> = ({
     },
     [adapter, handleError, connected]
   );
-
   return (
     <WalletContext.Provider
       value={{
         wallets,
         wallet,
+        adapter,
         account,
         connected,
         connecting,
@@ -384,7 +386,9 @@ export const WalletProvider: FC<WalletProviderProps> = ({
         signAndSubmitTransaction,
         signTransaction,
         signMessage,
-        network
+        network,
+        onAccountChange:handleAccountChange,
+        onNetworkChange:handleNetworkChange,
       }}>
       {children}
     </WalletContext.Provider>
